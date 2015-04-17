@@ -161,7 +161,7 @@ class News extends Basic {
 				
 				<div class='blog-post'>
 					<div class='blog-image'>
-						<a href='blog-post.html'><img src='../themes/crak/lib/img/defaults/817x320.jpg'></a>
+						<a href='blog-post.html'><img src='themes/crak/lib/img/defaults/817x320.jpg'></a>
 						<div class='blog-date'>
 							<span class='date'>".getDateUTC($postInfo['dateposted'], "M")."<br />".getDateUTC($postInfo['dateposted'], "d")."</span>
 							
@@ -171,7 +171,7 @@ class News extends Basic {
 					
 					<!-- blog-image -->
 					<div class='blog-content'>
-						<h2><a href='blog-post.html'>".filterText($postInfo['postsubject'])."</a></h2>
+						<h2><a href='".MAIN_ROOT."news/viewpost.php?nID=".$postInfo['news_id']."'>".filterText($postInfo['postsubject'])."</a></h2>
 						<p>".$dispNews."</p>
 					</div>
 					
@@ -179,7 +179,7 @@ class News extends Basic {
 					<div class='blog-info'>
 						<div class='post-pinfo'>
 							<span class='icon-user'></span> <a data-original-title='View' all='' posts='' by='' admin='' data-toggle='tooltip' href='#'>".$member->getMemberLink()."</a> &nbsp;
-							<span class='icon-comment'></span>  <a data-original-title='3 Comments' href='#'
+							<span class='icon-comment'></span>  <a data-original-title='3 Comments' href='".MAIN_ROOT."news/viewpost.php?nID=".$postInfo['news_id']."#comments'
 								data-toggle='tooltip'>".$this->countComments()." Comment(s)</a> &nbsp;
 						</div>
 						
@@ -190,6 +190,7 @@ class News extends Basic {
 					
 				</div>
 	
+				<div class='block-divider'></div>
 			";
 			
 			$hooksObj->run("newspost_show");

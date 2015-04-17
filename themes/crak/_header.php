@@ -55,19 +55,19 @@
 									<a href="<?php echo $MAIN_ROOT; ?>">Home</a>
 								</li>
 								<li>
-									<a href="#">About</a>
+									<a href="about.php">About</a>
 								</li>
 								<li>
-									<a href="#">Teams</a>
+									<a href="teams/">Teams</a>
 								</li>
 								<li>
-									<a href="#">Forum</a>
+									<a href="forum/">Forum</a>
 								</li>
 								<li>
-									<a href="#">Gallery</a>
+									<a href="gallery/">Gallery</a>
 								</li>
 								<li>
-									<a href="#">Contact</a>
+									<a href="contact.php">Contact</a>
 								</li>
 							</ul>
 						</div>

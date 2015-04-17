@@ -1,32 +1,27 @@
 <?php
 
-include("../_setup.php");
-include("../themes/crak/_header.php");
+/*
+ * Bluethrust Clan Scripts v4
+ * Copyright 2014
+ *
+ * Author: Bluethrust Web Development
+ * E-mail: support@bluethrust.com
+ * Website: http://www.bluethrust.com
+ *
+ * License: http://www.bluethrust.com/license.php
+ *
+ */
 
-?>
 
-<div class="page normal-page container">
-	<div class="row">
-		<div class="span12">
-			<div id="bbpress-forums">
-				
-				<ul id="bbp-forum-965" class="bbp-topics">
-					<li class="bbp-header">
-						<ul class="forum-titles">
-							<li class="bbp-topic-title">Topic</li>
-							<li class="bbp-topic-voice-count">Views</li>
-							<li class="bbp-topic-reply-count">Replies</li>
-							<li class="bbp-topic-freshness">Freshness</li>
-						</ul>
-					</li>
-					
-					<li class="bbp-body">
-					
-<?php
+// Config File
+$prevFolder = "../";
+
+include($prevFolder."_setup.php");
 
 $consoleObj = new ConsoleOption($mysqli);
 $boardObj = new ForumBoard($mysqli);
 $member = new Member($mysqli);
+
 $postMemberObj = new Member($mysqli);
 
 $intPostTopicCID = $consoleObj->findConsoleIDByName("Post Topic");
@@ -34,6 +29,21 @@ $intPostTopicCID = $consoleObj->findConsoleIDByName("Post Topic");
 $categoryObj = new BasicOrder($mysqli, "forum_category", "forumcategory_id");
 $categoryObj->set_assocTableName("forum_board");
 $categoryObj->set_assocTableKey("forumboard_id");
+
+
+$ipbanObj = new Basic($mysqli, "ipban", "ipaddress");
+
+if($ipbanObj->select($IP_ADDRESS, false)) {
+	$ipbanInfo = $ipbanObj->get_info();
+
+	if(time() < $ipbanInfo['exptime'] OR $ipbanInfo['exptime'] == 0) {
+		die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."banned.php';</script>");
+	}
+	else {
+		$ipbanObj->delete();
+	}
+
+}
 
 
 if(!$boardObj->select($_GET['bID'])) {
@@ -46,13 +56,18 @@ if(!$boardObj->select($_GET['bID'])) {
 $boardInfo = $boardObj->get_info_filtered();
 
 
+// Start Page
+$PAGE_NAME = $boardInfo['name']." - Forum - ";
+include($prevFolder."themes/".$THEME."/_header.php");
+
 // Check Private Forum
 
-/*if($websiteInfo['privateforum'] == 1 && !constant("LOGGED_IN")) {
+if($websiteInfo['privateforum'] == 1 && !constant("LOGGED_IN")) {
 	die("<script type='text/javascript'>window.location = '".$MAIN_ROOT."login.php';</script>");
-}*/
+}
 
 $memberInfo = array();
+
 
 $LOGGED_IN = false;
 $NUM_PER_PAGE = 25;
@@ -98,6 +113,7 @@ if($_GET['pID'] > $NUM_OF_PAGES) {
 	<script type='text/javascript'>window.location = 'viewboard.php?bID=".$_GET['bID']."';</script>
 	";
 	exit();
+
 }
 
 // Check for Next button
@@ -411,72 +427,3 @@ include($prevFolder."themes/".$THEME."/_footer.php");
 
 
 ?>
-					
-					
-						<ul class="post-993 topic type-topic status-publish hentry odd bbp-parent-forum-965 user-id-1 instock">
-							<li class="bbp-topic-title">
-								<i class="icon-comment"></i>
-								<a class="bbp-topic-permalink" href="topic-detail.html" title="Curabitur sollicitudin mi vel auctor auctor">Curabitur sollicitudin mi vel auctor auctor</a>
-								<p class="bbp-topic-meta">
-									<span class="bbp-topic-started-by">Started by: <a href="#" title="View admin's profile" class="bbp-author-avatar" rel="nofollow"><img alt="" src="http://1.gravatar.com/avatar/38d93eff4c0db34aa79f07cf9ad1a89c?s=14&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D14&amp;r=G" class="avatar avatar-14 photo"></a>&nbsp;<a href="#" title="View admin's profile" class="bbp-author-name" rel="nofollow">admin</a></span>
-								</p>
-							</li>
-							<li class="bbp-topic-voice-count">1</li>
-							<li class="bbp-topic-reply-count">1</li>
-							<li class="bbp-topic-freshness">
-								<a href="#" title="Curabitur sollicitudin mi vel auctor auctor">6 months ago</a>
-								<p class="bbp-topic-meta">
-									<span class="bbp-topic-freshness-author"><a href="#" title="View admin's profile" class="bbp-author-avatar" rel="nofollow"><img alt="" src="http://1.gravatar.com/avatar/38d93eff4c0db34aa79f07cf9ad1a89c?s=14&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D14&amp;r=G" class="avatar avatar-14 photo"></a>&nbsp;<a href="#" title="View admin's profile" class="bbp-author-name" rel="nofollow">admin</a></span>
-								</p>
-							</li>
-						</ul>
-						<!-- #bbp-topic-993 -->
-						
-						
-						<ul class="post-995 topic type-topic status-publish hentry even bbp-parent-forum-965 user-id-1 instock">
-							<li class="bbp-topic-title">
-								<i class="icon-comment"></i>
-								<a class="bbp-topic-permalink" href="topic-detail.html" title="Pellentesque placerat tincidunt magna quis condimentum">Pellentesque placerat tincidunt magna quis condimentum</a>
-								<p class="bbp-topic-meta">
-									<span class="bbp-topic-started-by">Started by: <a href="#" title="View admin's profile" class="bbp-author-avatar" rel="nofollow"><img alt="" src="http://1.gravatar.com/avatar/38d93eff4c0db34aa79f07cf9ad1a89c?s=14&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D14&amp;r=G" class="avatar avatar-14 photo"></a>&nbsp;<a href="#" title="View admin's profile" class="bbp-author-name" rel="nofollow">admin</a></span>
-								</p>
-							</li>
-							<li class="bbp-topic-voice-count">1</li>
-							<li class="bbp-topic-reply-count">1</li>
-							<li class="bbp-topic-freshness">
-								<a href="#" title="Pellentesque placerat tincidunt magna quis condimentum">6 months ago</a>
-								<p class="bbp-topic-meta">
-									<span class="bbp-topic-freshness-author"><a href="#" title="View admin's profile" class="bbp-author-avatar" rel="nofollow"><img alt="" src="http://1.gravatar.com/avatar/38d93eff4c0db34aa79f07cf9ad1a89c?s=14&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D14&amp;r=G" class="avatar avatar-14 photo"></a>&nbsp;<a href="#" title="View admin's profile" class="bbp-author-name" rel="nofollow">admin</a></span>
-								</p>
-							</li>
-						</ul>
-						<!-- #bbp-topic-995 -->
-					</li>
-					
-					
-					<li class="bbp-footer">
-						<div class="tr">
-							<p>
-								<span class="td colspan4">&nbsp;</span>
-							</p>
-						</div>
-						<!-- .tr -->
-					</li>
-				</ul>
-				<!-- #bbp-forum-965 -->
-				
-				
-				<div id="no-topic-0" class="bbp-no-topic">
-					<div class="bbp-template-notice">
-						<p>You must be logged in to create new topics.</p>
-					</div>
-				</div>
-			</div>
-			<div class="clear"></div>
-		</div>
-	</div>
-</div>
-			
-			
-			
-<?php include("../themes/crak/_footer.php"); ?>
