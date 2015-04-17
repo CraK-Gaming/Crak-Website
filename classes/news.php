@@ -140,13 +140,13 @@ class News extends Basic {
 				$dispLastEdit = "<span style='font-style: italic'>last edited by ".$member->getMemberLink()." - ".$dispLastEditTime."</span>";		
 			}
 			
-			$dispNewsType = "";
+			/*$dispNewsType = "";
 			if($postInfo['newstype'] == 1) {
 				$dispNewsType = " - <span class='publicNewsColor' style='font-style: italic'>public</span>";
 			}
 			elseif($postInfo['newstype'] == 2) {
 				$dispNewsType = " - <span class='privateNewsColor' style='font-style: italic'>private</span>";
-			}
+			}*/
 			
 			
 			$member->select($postInfo['member_id']);
@@ -157,22 +157,37 @@ class News extends Basic {
 			$GLOBALS['news_post']['id'] = $this->intTableKeyValue;
 			$GLOBALS['news_post']['post'] = "
 	
-				<div class='newsDiv' id='newsDiv_".$postInfo['news_id']."'>
+				
+				
+				<div class='blog-post'>
+					<div class='blog-image'>
+						<a href='blog-post.html'><img src='../themes/crak/lib/img/defaults/817x320.jpg'></a>
+						<div class='blog-date'>
+							<span class='date'>".getDateUTC($postInfo['dateposted'], "M")."<br />".getDateUTC($postInfo['dateposted'], "d")."</span>
+							
+						</div>
+						
+					</div>
 					
-					<div class='postInfo'>
-						<div id='newsPostAvatar' style='float: left'>".$member->getAvatar()."</div>
-						<div id='newsPostInfo' style='float: left; margin-left: 15px'>posted by ".$member->getMemberLink()." - ".getPreciseTime($postInfo['dateposted']).$dispNewsType."<br>
-						<span class='subjectText'>".filterText($postInfo['postsubject'])."</span></div>
-						<div style='clear: both'></div>
+					<!-- blog-image -->
+					<div class='blog-content'>
+						<h2><a href='blog-post.html'>".filterText($postInfo['postsubject'])."</a></h2>
+						<p>".$dispNews."</p>
 					</div>
-					<br>
-					<div class='dottedLine' style='margin-top: 5px'></div>
-					<div class='postMessage'>
-						".$dispNews."
+					
+					<!-- blog-content -->
+					<div class='blog-info'>
+						<div class='post-pinfo'>
+							<span class='icon-user'></span> <a data-original-title='View' all='' posts='' by='' admin='' data-toggle='tooltip' href='#'>".$member->getMemberLink()."</a> &nbsp;
+							<span class='icon-comment'></span>  <a data-original-title='3 Comments' href='#'
+								data-toggle='tooltip'>".$this->countComments()." Comment(s)</a> &nbsp;
+						</div>
+						
+						<!--<a href='blog-post.html' class='button-small'>Read more</a>-->
+						<div class='clear'></div>
 					</div>
-					<div class='dottedLine' style='margin-top: 5px; margin-bottom: 5px'></div>
-					<div class='main' style='margin-top: 0px; margin-bottom: 10px; padding-left: 5px'>".$dispLastEdit."</div>
-					<p style='padding: 0px; margin: 0px' align='right'><b><a href='".MAIN_ROOT."news/viewpost.php?nID=".$postInfo['news_id']."#comments'>Comments (".$this->countComments().")</a></b></p>
+					<!-- blog-info -->
+					
 				</div>
 	
 			";

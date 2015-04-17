@@ -184,7 +184,7 @@
 		jQuery("#layerslider").layerSlider({
 			pauseOnHover: false,
 			autoPlayVideos: false,
-			skinsPath: 'themes/crak/lib/layerslider/skins/',
+			skinsPath: '<?php echo $MAIN_ROOT; ?>/themes/crak/lib/layerslider/skins/',
 			responsive : true,
 			responsiveUnder : 1200,
             layersContainer : 1200,
