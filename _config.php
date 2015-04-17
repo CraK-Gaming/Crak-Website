@@ -12,18 +12,24 @@
 	*
 	*/
 	
-	$dbhost = "localhost";
+	$dbprefix = "";
+	$ADMIN_KEY = "JCgzjukh"; // KEY FOR EXTRA SECURITY WHEN ADDING CONSOLE OPTION
+	define("ADMIN_KEY", $ADMIN_KEY);
+	
+	/*$dbhost = "localhost";
 	$dbuser = "root";
 	$dbpass = "";
 	$dbname = "blue";
 	
-	$dbprefix = "";
-	
 	$MAIN_ROOT = "/Crak Management/";
 	$BASE_DIRECTORY = "C:/xampp/htdocs/Crak Management/";
+	*/
 	
-	$ADMIN_KEY = "Rachelliefie87!"; // KEY FOR EXTRA SECURITY WHEN ADDING CONSOLE OPTION
+	$dbhost = "localhost";
+	$dbuser = "blue";
+	$dbpass = "blue";
+	$dbname = "blue";
 	
-	define("ADMIN_KEY", $ADMIN_KEY);
-
+	$MAIN_ROOT = "/Crak-Website/";
+	$BASE_DIRECTORY = "C:/wamp/www/Crak-Website/";
 ?>
