@@ -337,7 +337,7 @@ foreach($arrPageTopics as $postID) {
 		<ul class='post-993 topic type-topic status-publish hentry odd bbp-parent-forum-965 user-id-1 instock'>
 							<li class='bbp-topic-title'>
 								<i class='icon-comment'></i>
-								<a class='bbp-topic-permalink' href=viewtopic.php?tID=".$postInfo['forumtopic_id']."' title='".$postInfo['title']."'>".$postInfo['title']."</a>
+								<a class='bbp-topic-permalink' href='viewtopic.php?tID=".$postInfo['forumtopic_id']."' title='".$postInfo['title']."'>".$postInfo['title']."</a>
 								<p class='bbp-topic-meta'>
 									<span class='bbp-topic-started-by'>Started by: <a href='#' title='' class='bbp-author-avatar' rel='nofollow'><img alt='' src='http://1.gravatar.com/avatar/38d93eff4c0db34aa79f07cf9ad1a89c?s=14&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D14&amp;r=G' class='avatar avatar-14 photo'></a>&nbsp;<a href='#' title='' class='bbp-author-name' rel='nofollow'>".$dispTopicPoster."</a></span>
 								</p>

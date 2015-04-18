@@ -42,8 +42,8 @@
 	}
 	
 	
-	$posterRankObj->select($postMemberInfo['rank_id']);
-	$posterRankInfo = $posterRankObj->get_info_filtered();
+	//$posterRankObj->select($postMemberInfo['rank_id']);
+	//$posterRankInfo = $posterRankObj->get_info_filtered();
 	
 	$dispLastEdit = "";
 	if($postInfo['lastedit_date'] != 0) {
@@ -53,7 +53,7 @@
 	}
 	
 	
-	$dispRankWidth = ($websiteInfo['forum_rankwidth'] <= 0) ? "" : "width: ".$websiteInfo['forum_rankwidth'].$websiteInfo['forum_rankwidthunit'].";";
+	/*$dispRankWidth = ($websiteInfo['forum_rankwidth'] <= 0) ? "" : "width: ".$websiteInfo['forum_rankwidth'].$websiteInfo['forum_rankwidthunit'].";";
 	$dispRankHeight = ($websiteInfo['forum_rankheight'] <= 0) ? "" : "height: ".$websiteInfo['forum_rankheight'].$websiteInfo['forum_rankheightunit'].";";
 	$dispRankDimensions = ($dispRankWidth != "" || $dispRankHeight != "") ? " style='".$dispRankWidth.$dispRankHeight."'" : "";
 	$dispRankIMG = ($websiteInfo['forum_showrank'] == 1 && $posterRankInfo['rank_id'] != 1) ? "<div id='forumShowRank' style='text-align: center'><img src='".$posterRankInfo['imageurl']."'".$dispRankDimensions."></div>" : "";
@@ -91,9 +91,7 @@
 			$i++;
 			if($i > $medalCount) { break; }
 		}
-		
-		
-	}
+	}*/
 	
 	$setAvatarWidth = ($websiteInfo['forum_avatarwidth'] > 0) ? $websiteInfo['forum_avatarwidth'] : "50";
 	$setAvatarWidthUnit = ($websiteInfo['forum_avatarwidthunit'] == "%") ? "%" : "px";
@@ -103,8 +101,34 @@
 	
 	$dispForumPostText = ($websiteInfo['forum_linkimages'] == 1) ? autoLinkImage(parseBBCode($postMessage)) : parseBBCode($postMessage);
 
+	echo "
+			<li class='bbp-body'>
+				<div class='bbp-reply-header'>
+					<div class='bbp-meta'>
+						<span class='bbp-reply-post-date'>Posted".$dispPostedOn." ".getPreciseTime($postInfo['dateposted'])."</span>
+						<a href='#' class='bbp-reply-permalink'>#".$postInfo['forumpost_id']."</a>
+						<span class='bbp-admin-links'></span>
+					</div>
+					<!-- .bbp-meta -->
+				</div>
+				<div class='post-993 topic type-topic status-publish hentry odd bbp-parent-forum-965 bbp-parent-topic-993 bbp-reply-position-1 user-id-1 topic-author instock'>
+					<div class='bbp-reply-author'>
+						<a href='#' title='' class='bbp-author-avatar' rel='nofollow'>".$posterMemberObj->getAvatar($setAvatarWidth.$setAvatarWidthUnit, $setAvatarHeight.$setAvatarHeightUnit)."</a><br>
+						".$posterMemberObj->getMemberLink()."<br>
+						<div class='bbp-author-role'></div>
+					</div>
+					<!-- .bbp-reply-author -->
+					<div class='bbp-reply-content'>
+						".$dispForumPostText.$dispLastEdit."
+					</div>
+					<!-- .bbp-reply-content -->
+				</div>
+				<!-- .reply -->
+			</li>
+		";
 	
-	echo "<div class='forumPostContainer'>
+	
+	/*echo "<div class='forumPostContainer'>
 			<div class='forumPostPosterInfo main'><a name='".$postInfo['forumpost_id']."'></a>
 				<span class='boardPosterName'>".$posterMemberObj->getMemberLink()."</span><br>
 				".$posterRankInfo['name']."
@@ -125,8 +149,9 @@
 			<div class='forumPostPosterInfo'></div>
 			<div class='forumPostMessageExtras'>
 				";
+			*/
 				
-		$arrAttachments = $this->getPostAttachments();
+		/*$arrAttachments = $this->getPostAttachments();
 		
 		if(count($arrAttachments) > 0 && $blnShowAttachments) {
 			echo "
@@ -157,14 +182,14 @@
 				echo "
 					</div>
 					";
-		}
+		}*/
 		
 		
-		if($postMemberInfo['forumsignature'] != "" && $websiteInfo['forum_hidesignatures'] == 0) {
+		/*if($postMemberInfo['forumsignature'] != "" && $websiteInfo['forum_hidesignatures'] == 0) {
 			echo "
 				<div class='forumSignatureContainer'>".parseBBCode($posterMemberObj->get_info("forumsignature"))."</div>
 			";
-		}
+		}*/
 		
 		echo "<div class='forumManageLinks'>";
 		if($this->blnManageable || $postMemberInfo['member_id'] == $memberInfo['member_id']) {
@@ -183,11 +208,5 @@
 			
 			echo "&raquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$intPostTopicCID."&bID=".$topicInfo['forumboard_id']."&tID=".$topicInfo['forumtopic_id']."&quote=".$postInfo['forumpost_id']."'>QUOTE</a> &laquo;"; 
 		}
-		
-	
-		echo "
-			</div>
-			</div>
-		</div>";
 
 ?>
