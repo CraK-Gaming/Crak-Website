@@ -5,22 +5,23 @@ include("../themes/crak/_header.php");
 
 ?>
 
+<div class="container">
+				<div class="row">
+					<div class="title_wrapper">
+						<div class="span6">
+							<h1>Forums</h1>
+						</div>
+						<div class="breadcrumbs"><strong><a href="#"></a></strong></div>
+					</div>
+				</div>
+			</div>
+
 <div class="page normal-page container">
 	<div class="row">
 		<div class="span12">
 			<div id="bbpress-forums">
 				
-				<ul id="bbp-forum-965" class="bbp-topics">
-					<li class="bbp-header">
-						<ul class="forum-titles">
-							<li class="bbp-topic-title">Topic</li>
-							<li class="bbp-topic-voice-count">Views</li>
-							<li class="bbp-topic-reply-count">Replies</li>
-							<li class="bbp-topic-freshness">Freshness</li>
-						</ul>
-					</li>
-					
-					<li class="bbp-body">
+				
 					
 <?php
 
@@ -123,21 +124,6 @@ for($i=1; $i<=$NUM_OF_PAGES; $i++) {
 	$pageoptions .= "<option value='".$i."'".$selectPage.">".$i."</option>";
 }
 
-$dispPageSelectTop = "";
-$dispPageSelectBottom = "";
-if($blnPageSelect) {
-	$dispPageSelectTop = "
-	<p style='margin-top: 0px'><b>Page:</b> <select id='pageSelectTop' class='textBox'>".$pageoptions."</select> <input type='button' id='btnPageSelectTop' class='submitButton' value='GO' style='width: 40px'></p>
-	<p style='margin-top: 0px'>".$dispPreviousPage.$dispNextPage."</p>
-	";
-	
-	$dispPageSelectBottom = "
-	<p style='margin-top: 0px'><b>Page:</b> <select id='pageSelectBottom' class='textBox'>".$pageoptions."</select> <input type='button' id='btnPageSelectBottom' class='submitButton' value='GO' style='width: 40px'></p>
-	<p style='margin-top: 0px'>".$dispPreviousPage.$dispNextPage."</p>
-	";
-}
-
-
 // Subforums
 
 $subForumObj = new ForumBoard($mysqli);
@@ -192,31 +178,41 @@ foreach($arrSubForums as $boardID) {
 		}
 		
 		
-		$dispMoreSubForums = "";
+		/*$dispMoreSubForums = "";
 		if(count($arrDispMoreSubForums) > 0) {
-			$dispMoreSubForums = "<br><br><b>Sub-Forums:</b><br>&nbsp;&nbsp;".implode("&nbsp;&nbsp;<b>|</b>&nbsp;&nbsp;", $arrDispMoreSubForums);	
-		}
+			$dispMoreSubForums = "<br><br><b>111Sub-Forums:</b><br>&nbsp;&nbsp;".implode("&nbsp;&nbsp;<b>|</b>&nbsp;&nbsp;", $arrDispMoreSubForums);	
+			
+		}*/
 		
 		$subForumObj->select($boardID);
 		$subForumInfo = $subForumObj->get_info_filtered();
-		$dispSubForums .= "
+		/*$dispSubForums .= "
 			<tr class='boardRows".$newTopicBG."'>
+				<td>TEST</td>
 				<td class='boardName dottedLine".$newTopicBG."'><a href='viewboard.php?bID=".$subForumInfo['forumboard_id']."'>".$subForumInfo['name']."</a>".$dispNewTopicIMG."<br><span class='boardDescription'>".$subForumInfo['description'].$dispMoreSubForums."</span></td>
 				<td class='dottedLine boardLastPost".$newTopicBG."'>".$dispLastPost."</td>
 				<td class='dottedLine boardTopicCount".$newTopicBG."' align='center'>".$dispTopicCount."<span id='forumPageTopicCount' style='display: none'> Topics</span></td>
 				<td class='dottedLine boardTopicCount".$newTopicBG."' align='center'>".$dispPostCount."<span id='forumPagePostCount' style='display: none'> Posts</span></td>
 			
 			</tr>
-		";
+		";*/
+		
+		$dispSubForums .= "
+				<ul class='post-963 forum type-forum status-publish hentry loop-item-0 odd bbp-forum-status-open bbp-forum-visibility-publish instock'>
+					<li class='bbp-forum-info'>
+						<i class='icon-comments'></i>
+						<a class='bbp-forum-title' href='viewboard.php?bID=".$subForumInfo['forumboard_id']."' title='".$subForumInfo['name']."'>".$subForumInfo['name']."</a>
+						<div class='bbp-forum-content'></div>
+					</li>
+					<li class='bbp-forum-topic-count'>".$dispTopicCount."</li>
+					<li class='bbp-forum-reply-count'>".$dispPostCount."</li>
+				</ul>
+			";
 		
 	}
 
 }
 
-$breadcrumbObj->setTitle($boardInfo['name']);
-$breadcrumbObj->addCrumb("Home", $MAIN_ROOT);
-$breadcrumbObj->addCrumb("Forum", $MAIN_ROOT."forum");
-$dispBreadCrumbChain = "";
 if($boardInfo['subforum_id'] != 0) {
 	$subForumID = $boardInfo['subforum_id'];
 	$submForumBC = array();
@@ -224,41 +220,34 @@ if($boardInfo['subforum_id'] != 0) {
 		$subForumObj->select($subForumID);
 		$subForumInfo = $subForumObj->get_info_filtered();
 		$subForumID = $subForumInfo['subforum_id'];
-		//$dispBreadCrumbChain = "<a href='".$MAIN_ROOT."forum/viewboard.php?bID=".$subForumInfo['forumboard_id']."'>".$subForumInfo['name']."</a> > ".$dispBreadCrumbChain;
 		$subForumBC[] = array("link" => $MAIN_ROOT."forum/viewboard.php?bID=".$subForumInfo['forumboard_id'], "value" => $subForumInfo['name']);
 	}
 
 	krsort($subForumBC);
-	foreach($subForumBC as $bcInfo) {
-		$breadcrumbObj->addCrumb($bcInfo['value'], $bcInfo['link']);
-	}
 
 }
-$breadcrumbObj->addCrumb($boardInfo['name']);
-include($prevFolder."include/breadcrumb.php");
 
-$boardObj->showSearchForm();
+/*$boardObj->showSearchForm();
 echo "
 <table class='forumTable'>
-";
+";*/
 
 if($dispSubForums != "") {
 
 	echo "	
-	
-		<tr>
-			<td colspan='4' class='boardCategory'>Sub-Forums</td>
-		</tr>
-		<tr>
-			<td class='boardTitles'>Forum:</td>
-			<td class='boardTitles forumLastPost'>Last Post:</td>
-			<td class='boardTitles forumTopicCount'>Topics:</td>
-			<td class='boardTitles forumTopicCount'>Posts:</td>
-		</tr>
+		<ul id='bbp-forum-965' class='bbp-topics'>
+					<li class='bbp-header'>
+						<ul class='forum-titles'>
+							<li class='bbp-topic-title'>Sub Boards</li>
+							<li class='bbp-topic-voice-count'>Topics</li>
+							<li class='bbp-topic-reply-count'>Posts</li>
+						</ul>
+					</li>
+					
+					<li class='bbp-body'>
 	";
 	
 	echo $dispSubForums;
-	echo "<tr><td colspan='4'><br><br></td></tr>";
 }
 
 $pageSelector = new PageSelector();
@@ -267,35 +256,32 @@ $pageSelector->setCurrentPage($_GET['pID']);
 $pageSelector->setLink(MAIN_ROOT."forum/viewboard.php?bID=".$_GET['bID']."&pID=");
 
 
-echo "
-	<tr>
-		<td colspan='2' class='main' valign='bottom'>
-			"; 
-			if(LOGGED_IN && $boardObj->memberHasAccess($memberInfo, true)) { 
-				echo "<p style='margin-top: 0px'><b>&raquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$intPostTopicCID."&bID=".$boardInfo['forumboard_id']."'>NEW TOPIC</a> &laquo;</b></p>"; 
-			}
-		echo "
-		</td>
-		<td colspan='2' align='right' class='main'>
-			";
-		
-		$pageSelector->show();
-		
-echo "
-		</td>
-	</tr>
-	<tr>
-		<td class='boardTitles'>Topic:</td>
-		<td class='boardTitles forumTopicCount'>Replies:</td>
-		<td class='boardTitles forumTopicCount'>Views:</td>
-		<td class='boardTitles forumLastPost'>Last Post:</td>
-	</tr>
-	<tr>
-		<td class='dottedLine' style='padding-top: 5px' colspan='4'></td>
-	</tr>
-";
 
+			/*if(LOGGED_IN && $boardObj->memberHasAccess($memberInfo, true)) { 
+				echo "<p style='margin-top: 0px'><b>&raquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$intPostTopicCID."&bID=".$boardInfo['forumboard_id']."'>NEW TOPIC</a> &laquo;</b></p>"; 
+			}*/
+		
+		
+		//$pageSelector->show();
+		
 $arrPageTopics = $boardObj->getForumTopics(" ft.stickystatus DESC, fp.dateposted DESC", " LIMIT ".$intOffset.", ".$NUM_PER_PAGE);
+
+if (count($arrPageTopics) > 0)
+{
+	echo "	
+		<ul id='bbp-forum-965' class='bbp-topics'>
+					<li class='bbp-header'>
+						<ul class='forum-titles'>
+							<li class='bbp-topic-title'>Topics</li>
+							<li class='bbp-topic-voice-count'>Replies</li>
+							<li class='bbp-topic-reply-count'>Views</li>
+							<li class='bbp-topic-freshness'>Freshness</li>
+						</ul>
+					</li>
+					
+					<li class='bbp-body'>
+	";
+}
 
 foreach($arrPageTopics as $postID) {
 	
@@ -338,38 +324,45 @@ foreach($arrPageTopics as $postID) {
 	}
 	
 	
-	echo "
+	/*echo "
 		<tr class='boardRows".$newTopicBG."'>
 			<td class='boardName dottedLine".$newTopicBG."'><a href='viewtopic.php?tID=".$postInfo['forumtopic_id']."'>".$postInfo['title']."</a>".$dispTopicIconsIMG."<br><span class='boardDescription'>by ".$dispTopicPoster." - ".getPreciseTime($postInfo['dateposted'])."</span></td>
 			<td class='boardTopicCount dottedLine".$newTopicBG."' align='center'>".$topicInfo['replies']."<span id='forumPagePostCount' style='display: none'> Replies</span></td>
 			<td class='boardTopicCount dottedLine".$newTopicBG."' align='center'>".$topicInfo['views']."<span id='forumPagePostCount' style='display: none'> Views</span></td>
 			<td class='boardLastPost dottedLine".$newTopicBG."'>by ".$dispLastPoster."<br>".getPreciseTime($lastPostInfo['dateposted'])."</td>
 		</tr>
+	";*/
+	
+	echo "
+		<ul class='post-993 topic type-topic status-publish hentry odd bbp-parent-forum-965 user-id-1 instock'>
+							<li class='bbp-topic-title'>
+								<i class='icon-comment'></i>
+								<a class='bbp-topic-permalink' href=viewtopic.php?tID=".$postInfo['forumtopic_id']."' title='".$postInfo['title']."'>".$postInfo['title']."</a>
+								<p class='bbp-topic-meta'>
+									<span class='bbp-topic-started-by'>Started by: <a href='#' title='' class='bbp-author-avatar' rel='nofollow'><img alt='' src='http://1.gravatar.com/avatar/38d93eff4c0db34aa79f07cf9ad1a89c?s=14&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D14&amp;r=G' class='avatar avatar-14 photo'></a>&nbsp;<a href='#' title='' class='bbp-author-name' rel='nofollow'>".$dispTopicPoster."</a></span>
+								</p>
+							</li>
+							<li class='bbp-topic-voice-count'>".$topicInfo['replies']."</li>
+							<li class='bbp-topic-reply-count'>".$topicInfo['views']."</li>
+							<li class='bbp-topic-freshness'>
+								<a href='#' title='Curabitur sollicitudin mi vel auctor auctor'>".getPreciseTime($lastPostInfo['dateposted'])."</a>
+								<p class='bbp-topic-meta'>
+									<span class='bbp-topic-freshness-author'><a href='#' title='' class='bbp-author-avatar' rel='nofollow'><img alt='' src='http://1.gravatar.com/avatar/38d93eff4c0db34aa79f07cf9ad1a89c?s=14&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D14&amp;r=G' class='avatar avatar-14 photo'></a>&nbsp;<a href='#' title='' class='bbp-author-name' rel='nofollow'>".$dispLastPoster."</a></span>
+								</p>
+							</li>
+						</ul>
 	";
 	
 }
-
-echo "
-	<tr>
-		<td colspan='2' style='padding-top: 15px' class='main' valign='top'>
-		";
 
 		if(LOGGED_IN) {
 			echo "
 				<p style='margin-top: 0px'><b>&raquo; <a href='".$MAIN_ROOT."members/console.php?cID=".$intPostTopicCID."&bID=".$boardInfo['forumboard_id']."'>NEW TOPIC</a> &laquo;</b></p>
 			";
 		}
-	echo "
-		
-		</td>
-		<td colspan='2' style='padding-top: 15px' align='right' class='main'>
-			";
+
 	$pageSelector->show();
-	echo "
-		</td>
-	</tr>
-</table>
-";
+
 
 if(count($arrTopics) == 0) {
 	
@@ -407,50 +400,7 @@ if($blnPageSelect) {
 	";
 }
 
-include($prevFolder."themes/".$THEME."/_footer.php");
-
-
 ?>
-					
-					
-						<ul class="post-993 topic type-topic status-publish hentry odd bbp-parent-forum-965 user-id-1 instock">
-							<li class="bbp-topic-title">
-								<i class="icon-comment"></i>
-								<a class="bbp-topic-permalink" href="topic-detail.html" title="Curabitur sollicitudin mi vel auctor auctor">Curabitur sollicitudin mi vel auctor auctor</a>
-								<p class="bbp-topic-meta">
-									<span class="bbp-topic-started-by">Started by: <a href="#" title="View admin's profile" class="bbp-author-avatar" rel="nofollow"><img alt="" src="http://1.gravatar.com/avatar/38d93eff4c0db34aa79f07cf9ad1a89c?s=14&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D14&amp;r=G" class="avatar avatar-14 photo"></a>&nbsp;<a href="#" title="View admin's profile" class="bbp-author-name" rel="nofollow">admin</a></span>
-								</p>
-							</li>
-							<li class="bbp-topic-voice-count">1</li>
-							<li class="bbp-topic-reply-count">1</li>
-							<li class="bbp-topic-freshness">
-								<a href="#" title="Curabitur sollicitudin mi vel auctor auctor">6 months ago</a>
-								<p class="bbp-topic-meta">
-									<span class="bbp-topic-freshness-author"><a href="#" title="View admin's profile" class="bbp-author-avatar" rel="nofollow"><img alt="" src="http://1.gravatar.com/avatar/38d93eff4c0db34aa79f07cf9ad1a89c?s=14&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D14&amp;r=G" class="avatar avatar-14 photo"></a>&nbsp;<a href="#" title="View admin's profile" class="bbp-author-name" rel="nofollow">admin</a></span>
-								</p>
-							</li>
-						</ul>
-						<!-- #bbp-topic-993 -->
-						
-						
-						<ul class="post-995 topic type-topic status-publish hentry even bbp-parent-forum-965 user-id-1 instock">
-							<li class="bbp-topic-title">
-								<i class="icon-comment"></i>
-								<a class="bbp-topic-permalink" href="topic-detail.html" title="Pellentesque placerat tincidunt magna quis condimentum">Pellentesque placerat tincidunt magna quis condimentum</a>
-								<p class="bbp-topic-meta">
-									<span class="bbp-topic-started-by">Started by: <a href="#" title="View admin's profile" class="bbp-author-avatar" rel="nofollow"><img alt="" src="http://1.gravatar.com/avatar/38d93eff4c0db34aa79f07cf9ad1a89c?s=14&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D14&amp;r=G" class="avatar avatar-14 photo"></a>&nbsp;<a href="#" title="View admin's profile" class="bbp-author-name" rel="nofollow">admin</a></span>
-								</p>
-							</li>
-							<li class="bbp-topic-voice-count">1</li>
-							<li class="bbp-topic-reply-count">1</li>
-							<li class="bbp-topic-freshness">
-								<a href="#" title="Pellentesque placerat tincidunt magna quis condimentum">6 months ago</a>
-								<p class="bbp-topic-meta">
-									<span class="bbp-topic-freshness-author"><a href="#" title="View admin's profile" class="bbp-author-avatar" rel="nofollow"><img alt="" src="http://1.gravatar.com/avatar/38d93eff4c0db34aa79f07cf9ad1a89c?s=14&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D14&amp;r=G" class="avatar avatar-14 photo"></a>&nbsp;<a href="#" title="View admin's profile" class="bbp-author-name" rel="nofollow">admin</a></span>
-								</p>
-							</li>
-						</ul>
-						<!-- #bbp-topic-995 -->
 					</li>
 					
 					
