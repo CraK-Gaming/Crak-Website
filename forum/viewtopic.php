@@ -20,9 +20,7 @@ include("../themes/crak/_header.php");
 				<div class="row">
 					<div class="span12">
 						<div id="bbpress-forums">
-							<div class="bbp-template-notice info">
-								<p class="bbp-topic-description">This topic contains 0 replies, has 1 voice, and was last updated by <a href="#" title="View admin's profile" class="bbp-author-avatar" rel="nofollow"><img alt="" src="http://1.gravatar.com/avatar/38d93eff4c0db34aa79f07cf9ad1a89c?s=14&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D14&amp;r=G" class="avatar avatar-14 photo"></a>&nbsp;<a href="#" title="View admin's profile" class="bbp-author-name" rel="nofollow">admin</a> <a href="#" title="Curabitur sollicitudin mi vel auctor auctor">6 months ago</a>.</p>
-							</div>
+						
 							<ul id="topic-993-replies" class="forums bbp-replies">
 								<li class="bbp-header">
 									<div class="bbp-reply-author">Author</div>
@@ -69,6 +67,7 @@ include("../themes/crak/_header.php");
 								<!-- .bbp-footer -->
 							</ul>
 							<!-- #topic-993-replies -->
+							
 							<div class="bbp-pagination">
 								<div class="bbp-pagination-count">
 									Viewing 1 post (of 1 total)
